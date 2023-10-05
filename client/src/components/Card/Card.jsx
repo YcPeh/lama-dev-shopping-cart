@@ -17,7 +17,7 @@ const Card = ({ item }) => {
           />
           <img
             src={
-              import.meta.VITE_UPLOAD_URL +
+              import.meta.env.VITE_UPLOAD_URL +
               item.attributes?.img2?.data?.attributes?.url
             }
             alt=""

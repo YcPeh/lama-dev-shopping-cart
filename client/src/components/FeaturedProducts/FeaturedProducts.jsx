@@ -1,66 +1,15 @@
-import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import "./FeaturedProducts.scss";
-import axios from "axios";
+import useFetch from "../../hooks/useFetch";
 
 const FeaturedProducts = ({ type }) => {
-  // const data = [
-  //   {
-  //     id: 1,
-  //     img: "https://images.pexels.com/photos/2112648/pexels-photo-2112648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //     img2: "https://images.pexels.com/photos/4066290/pexels-photo-4066290.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //     title: "T shirt",
-  //     isNew: false,
-  //     oldPrice: 19,
-  //     price: 12,
-  //   },
-  //   {
-  //     id: 2,
-  //     img: "https://images.pexels.com/photos/2112648/pexels-photo-2112648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //     title: "T shirt",
-  //     isNew: false,
-  //     oldPrice: 19,
-  //     price: 12,
-  //   },
-  //   {
-  //     id: 3,
-  //     img: "https://images.pexels.com/photos/2112648/pexels-photo-2112648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //     title: "T shirt",
-  //     isNew: true,
-  //     oldPrice: 19,
-  //     price: 12,
-  //   },
-  //   {
-  //     id: 4,
-  //     img: "https://images.pexels.com/photos/2112648/pexels-photo-2112648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  //     title: "T shirt",
-  //     isNew: true,
-  //     oldPrice: 19,
-  //     price: 12,
-  //   },
-  // ];
-
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          import.meta.env.VITE_API_URL + "/products?populate=*",
-          {
-            headers: {
-              Authorization: "bearer " + import.meta.env.VITE_API_TOKEN,
-            },
-          }
-        );
-        console.log("res", res);
-        setData(res.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
+  // `/products?populate=*`
+  const { data, loading, error } = useFetch(
+    `/products?populate=*&[filters][type][$eq]=${type}`
+  );
+  console.log("data", data);
+  console.log("loading", loading);
+  console.log("error", error);
 
   return (
     <div className="FeaturedProducts">
@@ -74,10 +23,11 @@ const FeaturedProducts = ({ type }) => {
         </p>
       </div>
       <div className="bottom">
-        {/* {console.log("data", data)} */}
-        {data.map((item) => (
-          <Card key={item.id} item={item} />
-        ))}
+        {error
+          ? "Something went wrong"
+          : loading
+          ? "loading"
+          : data?.map((item) => <Card key={item.id} item={item} />)}
       </div>
     </div>
   );
