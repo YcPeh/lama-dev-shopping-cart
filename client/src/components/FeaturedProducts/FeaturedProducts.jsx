@@ -7,9 +7,9 @@ const FeaturedProducts = ({ type }) => {
   const { data, loading, error } = useFetch(
     `/products?populate=*&[filters][type][$eq]=${type}`
   );
-  console.log("data", data);
-  console.log("loading", loading);
-  console.log("error", error);
+  // console.log("data", data);
+  // console.log("loading", loading);
+  // console.log("error", error);
 
   return (
     <div className="FeaturedProducts">

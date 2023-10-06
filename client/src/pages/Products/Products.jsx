@@ -26,7 +26,7 @@ const Products = () => {
     );
   };
 
-  console.log("selectedSubCats", selectedSubCats);
+  // console.log("selectedSubCats", selectedSubCats);
 
   return (
     <div className="products">
